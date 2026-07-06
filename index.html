@@ -1,1 +1,590 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Masjid Al-Muhajirin</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f5f7fa;
+overflow:hidden;
+}
+
+/* ===========================
+   SPLASH SCREEN
+=========================== */
+
+#splash{
+
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+
+background:linear-gradient(135deg,#00897B,#00695C);
+
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+
+z-index:9999;
+
+animation:hideSplash 1s ease 2.8s forwards;
+
+}
+
+.logo{
+
+width:120px;
+height:120px;
+
+border-radius:50%;
+background:white;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:60px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.25);
+
+animation:zoom 1.2s infinite alternate;
+
+}
+
+.title{
+
+margin-top:20px;
+
+font-size:28px;
+font-weight:600;
+color:white;
+
+}
+
+.subtitle{
+
+margin-top:5px;
+
+font-size:15px;
+color:white;
+opacity:.8;
+
+}
+
+.loader{
+
+margin-top:30px;
+
+width:55px;
+height:55px;
+
+border-radius:50%;
+border:5px solid rgba(255,255,255,.3);
+border-top:5px solid white;
+
+animation:spin 1s linear infinite;
+
+}
+
+/* ===========================
+      APP
+=========================== */
+
+.app{
+
+position:absolute;
+
+width:100%;
+height:100%;
+
+display:flex;
+flex-direction:column;
+
+opacity:0;
+
+animation:showApp .8s ease 3s forwards;
+
+}
+
+/* ===========================
+      HEADER
+=========================== */
+
+.header{
+
+height:70px;
+
+background:linear-gradient(90deg,#00897B,#26A69A);
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:0 20px;
+
+color:white;
+
+box-shadow:0 5px 15px rgba(0,0,0,.2);
+
+z-index:100;
+
+}
+
+.header h2{
+
+font-size:20px;
+font-weight:600;
+
+}
+
+.online{
+
+display:flex;
+align-items:center;
+
+font-size:13px;
+
+}
+
+.online span{
+
+width:10px;
+height:10px;
+
+background:#00ff66;
+
+border-radius:50%;
+
+margin-right:8px;
+
+animation:pulse 1.2s infinite;
+
+}
+
+/* ===========================
+      NAVBAR
+=========================== */
+
+.navbar{
+
+height:60px;
+
+background:white;
+
+display:flex;
+align-items:center;
+
+overflow-x:auto;
+
+padding:0 12px;
+
+gap:10px;
+
+box-shadow:0 2px 10px rgba(0,0,0,.08);
+
+}
+
+.navbar::-webkit-scrollbar{
+
+display:none;
+
+}
+
+.navbar button{
+
+border:none;
+
+padding:10px 18px;
+
+border-radius:30px;
+
+background:#eeeeee;
+
+cursor:pointer;
+
+font-size:14px;
+font-weight:500;
+
+transition:.3s;
+
+white-space:nowrap;
+
+}
+
+.navbar button:hover{
+
+background:#009688;
+color:white;
+
+}
+
+.navbar button.active{
+
+background:#009688;
+color:white;
+
+}
+
+/* ===========================
+      CONTENT
+=========================== */
+
+.content{
+
+flex:1;
+
+position:relative;
+
+background:#fff;
+
+}
+
+/* ===========================
+      LOADING
+=========================== */
+
+.loadingPage{
+
+position:absolute;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+background:white;
+
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+
+z-index:20;
+
+}
+
+.loadingPage .circle{
+
+width:60px;
+height:60px;
+
+border-radius:50%;
+
+border:5px solid #ddd;
+border-top:5px solid #009688;
+
+animation:spin 1s linear infinite;
+
+}
+
+.loadingPage p{
+
+margin-top:18px;
+
+font-size:15px;
+color:#666;
+
+}
+
+/* ===========================
+      IFRAME
+=========================== */
+
+iframe{
+
+width:100%;
+height:100%;
+
+border:none;
+
+opacity:0;
+
+transition:1s;
+
+}
+
+iframe.loaded{
+
+opacity:1;
+
+}
+
+/* ===========================
+      FLOATING BUTTON
+=========================== */
+
+.fab{
+
+position:absolute;
+
+right:20px;
+bottom:25px;
+
+width:60px;
+height:60px;
+
+border-radius:50%;
+
+background:#009688;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:28px;
+color:white;
+
+cursor:pointer;
+
+box-shadow:0 10px 25px rgba(0,0,0,.25);
+
+transition:.3s;
+
+z-index:99;
+
+}
+
+.fab:hover{
+
+transform:scale(1.1);
+
+}
+
+/* ===========================
+      ANIMATION
+=========================== */
+
+@keyframes zoom{
+
+from{
+transform:scale(.9);
+}
+
+to{
+transform:scale(1.05);
+}
+
+}
+
+@keyframes spin{
+
+100%{
+transform:rotate(360deg);
+}
+
+}
+
+@keyframes pulse{
+
+0%{
+transform:scale(1);
+}
+
+50%{
+transform:scale(1.5);
+}
+
+100%{
+transform:scale(1);
+}
+
+}
+
+@keyframes hideSplash{
+
+to{
+
+opacity:0;
+visibility:hidden;
+
+}
+
+}
+
+@keyframes showApp{
+
+to{
+
+opacity:1;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- Splash Screen -->
+
+<div id="splash">
+
+<div class="logo">
+🕌
+</div>
+
+<div class="title">
+Masjid Al-Muhajirin
+</div>
+
+<div class="subtitle">
+Sistem Informasi Masjid
+</div>
+
+<div class="loader"></div>
+
+</div>
+
+<!-- App -->
+
+<div class="app">
+<!-- ==========================
+     HEADER
+========================== -->
+
+<div class="header">
+
+    <h2>🕌 Masjid Al-Muhajirin</h2>
+
+    <div class="online">
+        <span></span>
+        Online
+    </div>
+
+</div>
+
+<!-- ==========================
+     NAVIGATION MENU
+========================== -->
+
+<div class="navbar">
+
+    <button class="active"
+        onclick="loadPage(this,'https://script.google.com/macros/s/AKfycbxowdnNcOdK_CGYS51YSiu10dkLsqODoJ0Q8EUtPYO1AG3DZFT3dEa_8132uMJ1bbMl/exec')">
+        🏠 Beranda
+    </button>
+
+    <button
+        onclick="loadPage(this,'INFO_INFAQ_URL')">
+        💰 Info Dana Infaq
+    </button>
+
+    <button
+        onclick="loadPage(this,'LOGIN_ADMIN_URL')">
+        🔐 Login Admin Infaq
+    </button>
+
+    <button
+        onclick="loadPage(this,'https://jadwalsholat.org')">
+        🕌 Jadwal Sholat
+    </button>
+
+    <button
+        onclick="loadPage(this,'https://www.youtube.com/results?search_query=kajian+islam')">
+        📖 Kajian
+    </button>
+
+    <button
+        onclick="loadPage(this,'https://maps.google.com')">
+        📍 Lokasi
+    </button>
+
+    <button
+        onclick="loadPage(this,'https://wa.me/6281234567890')">
+        ☎ Kontak
+    </button>
+
+</div>
+
+<!-- ==========================
+     CONTENT
+========================== -->
+
+<div class="content">
+
+    <div class="loadingPage" id="loading">
+
+        <div class="circle"></div>
+
+        <p>Memuat halaman...</p>
+
+    </div>
+
+    <iframe
+        id="frame"
+        src="https://script.google.com/macros/s/AKfycbxowdnNcOdK_CGYS51YSiu10dkLsqODoJ0Q8EUtPYO1AG3DZFT3dEa_8132uMJ1bbMl/exec"
+        allow="microphone">
+    </iframe>
+
+    <div class="fab" onclick="refreshPage()">
+        ⟳
+    </div>
+
+</div>
+
+</div>
+
+<script>
+
+const frame = document.getElementById("frame");
+
+frame.onload = function(){
+
+    document.getElementById("loading").style.display="none";
+
+    frame.classList.add("loaded");
+
+}
+
+function loadPage(button,url){
+
+    document.getElementById("loading").style.display="flex";
+
+    frame.classList.remove("loaded");
+
+    frame.src=url;
+
+    document.querySelectorAll(".navbar button").forEach(function(btn){
+
+        btn.classList.remove("active");
+
+    });
+
+    button.classList.add("active");
+
+}
+
+function refreshPage(){
+
+    document.getElementById("loading").style.display="flex";
+
+    frame.classList.remove("loaded");
+
+    frame.src=frame.src;
+
+}
+
+</script>
+
+</body>
+</html>
